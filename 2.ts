@@ -1003,15 +1003,19 @@ const passwords = input.split("\n");
 let ok = 0;
 passwords.forEach((entry) => {
   let [size, character, password] = entry.split(" ");
-  const [min, max] = size.split("-");
+  const [minStr, maxStr] = size.split("-");
+  const min = Number(minStr);
+  const max = Number(maxStr);
   character = character[0];
 
-  const e = password.match(new RegExp(character, "g"));
-  if (e && e.length) {
-    if (e.length >= Number(min) && e.length <= Number(max)) {
-      ok++;
-    }
-  }
+  // const e = password.match(new RegExp(character, "g"));
+  // if (e && e.length) {
+  //   if (e.length >= min && e.length <= max) {
+  //     console.log()
+  //   }
+  // }
+  if (password[min-1] === character && password[max-1] !== character) ok++;
+  if (password[max-1] === character && password[min-1] !== character) ok++;
 });
 
 console.log(ok);
