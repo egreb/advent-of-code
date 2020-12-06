@@ -324,22 +324,35 @@ let rows = `..#.......#..##...#...#..#.#...
   "\n",
 );
 
-let index = 0;
-let trees = 0;
-for (let i = 0; i < rows.length; i++) {
-  if (i + 1 >= rows.length) break;
+const slopes = [
+  [1, 1],
+  [3, 1],
+  [5, 1],
+  [7, 1],
+  [1, 2],
+];
+let sum = [];
+for (let y = 0; y < slopes.length; y++) {
+  const [right, down] = slopes[y];
+  let index = 0;
+  let trees = 0;
+  console.log(right, down);
 
-  index = index + 3; // 3 to the right..
-  const nextRow = rows[i + 1];
+  for (let i = 0; i < rows.length; i += down) {
+    if (i + down >= rows.length) break;
 
-  // if the index is equal or the same length as the row, 'reset' the index
-  if (index >= rows[i + 1].length) {
-    index = Math.abs(rows[i].length - index);
+    index = index + right; // 3 to the right..
+    const nextRow = rows[i + down];
+
+    // if the index is equal or the same length as the row, 'reset' the index
+    if (index >= rows[i + down].length) {
+      index = Math.abs(rows[i].length - index);
+    }
+    // console.log(i + 1, index, rows[i + 1][index]);
+    if (nextRow[index] === "#") {
+      trees++;
+    }
   }
-  // console.log(i + 1, index, rows[i + 1][index]);
-  if (nextRow[index] === "#") {
-    trees++;
-  }
+  sum.push(trees);
 }
-
-console.log(trees);
+console.log(sum);
