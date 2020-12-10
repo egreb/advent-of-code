@@ -2272,22 +2272,24 @@ qesdpalbnfjyrzhim
 xocesfutkghymvb`
 
 	groups := strings.Split(text, "\n\n")
-	fmt.Println(len(groups))
-	fmt.Println(groups[0])
 	sum := 0
-	questions := map[string]string{}
-	foo := 0
-	for _, g := range groups {
-		fmt.Println("g", g)
-		for _, gg := range strings.Split(g, "\n") {
-			for _, l := range strings.Split(gg, "") {
-				questions[l] = l
+
+	questions := map[string]int{}
+	for _, person := range groups {
+		answers := strings.Split(person, "\n")
+		for _, aa := range answers {
+			for _, answer := range strings.Split(aa, "") {
+				questions[answer]++
 			}
 		}
-		sum += len(questions)
-		questions = map[string]string{}
+		// sum += len(questions)
+		for _, q := range questions {
+			if q == len(answers) {
+				sum++
+			}
+		}
+		questions = map[string]int{}
 	}
 
 	fmt.Println(sum)
-	fmt.Println(foo)
 }
